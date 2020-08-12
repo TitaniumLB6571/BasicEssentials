@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace bedrockplay\basicessentials;
 
+use bedrockplay\basicessentials\broadcaster\BroadcasterManager;
+use bedrockplay\basicessentials\broadcaster\task\BroadcastTask;
 use bedrockplay\basicessentials\commands\AddCoinsCommand;
 use bedrockplay\basicessentials\commands\BanCommand;
+use bedrockplay\basicessentials\commands\BroadcastCommand;
 use bedrockplay\basicessentials\commands\CoinsCommand;
 use bedrockplay\basicessentials\commands\SetRankCommand;
 use bedrockplay\openapi\ranks\RankDatabase;
@@ -19,6 +22,8 @@ use vixikhd\bpcore\api\language\T;
  * Class BasicEssentials
  * @package bedrockplay\basicessentials
  */
+
+
 class BasicEssentials extends PluginBase implements Listener {
 
     /** @var float[] $chatDelays */
@@ -26,11 +31,12 @@ class BasicEssentials extends PluginBase implements Listener {
 
     public function onEnable() {
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
-
+        $this->getScheduler()->scheduleRepeatingTask(new BroadcastTask($this), 20 * 60 * 5); // Every 5 minutes
         $this->getServer()->getCommandMap()->register("BasicEssentials", new AddCoinsCommand());
         $this->getServer()->getCommandMap()->register("BasicEssentials", new BanCommand());
         $this->getServer()->getCommandMap()->register("BasicEssentials", new CoinsCommand());
         $this->getServer()->getCommandMap()->register("BasicEssentials", new SetRankCommand());
+
     }
 
     public function onDisable() {
