@@ -1,0 +1,6 @@
+name: BasicEssentials
+author: VixikHD
+description: Plugin which adds basic features to BedrockPlay server
+version: 1.0.0
+main: bedrockplay\basicessentials\BasicEssentials
+api: 3.0.0
