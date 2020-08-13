@@ -9,7 +9,7 @@ use bedrockplay\basicessentials\commands\AddCoinsCommand;
 use bedrockplay\basicessentials\commands\BanCommand;
 use bedrockplay\basicessentials\commands\CoinsCommand;
 use bedrockplay\basicessentials\commands\SetRankCommand;
-use bedrockplay\basicessentialstask\BroadcastTask;
+use bedrockplay\basicessentials\task\BroadcastTask;
 use bedrockplay\openapi\ranks\RankDatabase;
 use bedrockplay\openapi\servers\ServerManager;
 use pocketmine\event\Listener;
