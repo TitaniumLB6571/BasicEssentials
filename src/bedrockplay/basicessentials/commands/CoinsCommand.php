@@ -31,11 +31,12 @@ class CoinsCommand extends Command {
      */
     public function execute(CommandSender $sender, string $commandLabel, array $args) {
         if(!$sender instanceof Player) {
+            $sender->sendMessage("§9Game>§7 Command only usable in-game");
             return;
         }
 
         Economy::getCoins($sender, function (int $amount) use ($sender) {
-            $sender->sendMessage("§9Account> §aCurrently you have $amount coins!");
+            $sender->sendMessage("§9Account> §7You currently have§a $amount §7coins!");
         });
     }
 }

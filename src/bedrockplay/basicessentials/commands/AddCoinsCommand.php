@@ -35,23 +35,23 @@ class AddCoinsCommand extends Command {
         }
 
         if(count($args) < 2) {
-            $sender->sendMessage("§cUsage: §7/addcoins <player> <amount>");
+            $sender->sendMessage("§9Usage: §7/addcoins <player> <amount>");
             return;
         }
 
         $player = Server::getInstance()->getPlayer($args[0]);
         if($player === null) {
-            $sender->sendMessage("§9Account> §cInvalid player");
+            $sender->sendMessage("§9Account> §7Invalid player given");
             return;
         }
 
         if(!is_numeric($args[1])) {
-            $sender->sendMessage("§9Account> §cInvalid amount");
+            $sender->sendMessage("§9Account> §cInvalid amount given");
             return;
         }
 
         Economy::addCoins($player, (int)$args[1]);
-        $player->sendMessage("§9Account> §aYou have received {$args[1]} coins from {$sender->getName()}!");
-        $sender->sendMessage("§9Account> §aYou gave {$args[1]} coins to {$sender->getName()}!");
+        $player->sendMessage("§9Account> §7You have received §a{$args[1]} §7coins from §a{$sender->getName()}!");
+        $sender->sendMessage("§9Account> §7You gave §a{$args[1]} §7coins to §a{$sender->getName()}!");
     }
 }

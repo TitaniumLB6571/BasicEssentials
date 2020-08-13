@@ -28,7 +28,7 @@ class BasicEssentials extends PluginBase implements Listener {
 
 
 
-    const SERVER_NAME = TextFormat::BOLD . TextFormat::YELLOW . "BP" . TextFormat::DARK_GRAY . "»";
+    const SERVER_NAME = TextFormat::BOLD . TextFormat::YELLOW . "B" . TextFormat::GOLD . "P" . TextFormat::DARK_GRAY . "»";
 
 
     /** @var float[] $chatDelays */
@@ -42,11 +42,38 @@ class BasicEssentials extends PluginBase implements Listener {
     public function onEnable() {
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
         $this->getScheduler()->scheduleRepeatingTask(new BroadcastTask($this), 20 * 60 * 5); // Every 5 minutes
-        $this->getServer()->getCommandMap()->register("BasicEssentials", new AddCoinsCommand());
-        $this->getServer()->getCommandMap()->register("BasicEssentials", new BanCommand());
-        $this->getServer()->getCommandMap()->register("BasicEssentials", new CoinsCommand());
-        $this->getServer()->getCommandMap()->register("BasicEssentials", new SetRankCommand());
+        $this->initializeCommands();
+    }
 
+    /**
+     * @param string $command
+     */
+    private function removeCommand(string $command) {
+        $commandMap = $this->getServer()->getCommandMap();
+        $cmd = $commandMap->getCommand($command);
+        if ($cmd == null) {
+            return;
+        }
+        $cmd->setLabel("");
+        $cmd->unregister($commandMap);
+    }
+
+    /**
+     * Registers commands and removes unnecessary ones
+     */
+    private function initializeCommands()
+    {
+        $commands = array("ban");
+        for ($i = 0; $i < count($commands); $i++) {
+            $this->removeCommand($commands[$i]);
+        }
+        $commandMap = $this->getServer()->getCommandMap();
+        $commandMap->registerAll("basicessentials", array(
+            new AddCoinsCommand(),
+            new BanCommand(),
+            new CoinsCommand(),
+            new SetRankCommand(),
+        ));
     }
 
     public function onLoad(): void {

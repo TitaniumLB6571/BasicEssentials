@@ -35,7 +35,8 @@ class BanCommand extends Command {
         "airjump" => ["You were banned for 1 week (AirJump)", self::WEEK, "AirJump"],
         "killaura" => ["You were banned for 1 week (KillAura)", self::WEEK, "KillAura"],
         "speed" => ["You were banned for 1 day (Speed)", self::DAY, "Speed"],
-        "glide" => ["You were banned for 1 day (Glide)", self::DAY, "Glide"]
+        "glide" => ["You were banned for 1 day (Glide)", self::DAY, "Glide"],
+        "multiple" => ["You were banned for 30 days (Multiple Hacks)", self::MONTH, "MultipleHacks"]
     ];
 
     /**
@@ -58,7 +59,7 @@ class BanCommand extends Command {
             return;
         }
         if(count($args) < 2) {
-            $sender->sendMessage("§cUsage: §7/ban <player> <time | hack: [fly, reach, hitbox, airjump, killaura, speed, glide]> [reason]");
+            $sender->sendMessage("§9Usage: §7/ban <player> <time|[fly, reach, hitbox, airjump, killaura, speed, glide, multiple]> [reason]");
             return;
         }
 
@@ -66,7 +67,7 @@ class BanCommand extends Command {
 
         if($this->canFormatTime($args[1])) {
             if(!isset($args[2])) {
-                $sender->sendMessage("§cUsage: §7/ban <player> <time> <reason>");
+                $sender->sendMessage("§9Usage: §7/ban <player> <time> <reason>");
                 return;
             }
 
@@ -124,7 +125,7 @@ class BanCommand extends Command {
             return;
         }
 
-        $sender->sendMessage("§c> Ban with this hacks isn't implemented yet. Lead to VixikCZ to implement it.");
+        $sender->sendMessage("§9§l> §7Normal bans have not been implemented. Contact VixikHD or TitaniumLB to implement them.");
     }
 
     /**

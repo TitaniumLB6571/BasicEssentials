@@ -34,24 +34,24 @@ class SetRankCommand extends Command {
             return;
         }
         if(count($args) < 2) {
-            $sender->sendMessage("§cUsage: §7/setrank <player> <rank>");
+            $sender->sendMessage("§9Usage: §7/setrank <player> <rank>");
             return;
         }
 
         $player = Server::getInstance()->getPlayer($args[0]);
         if($player === null) {
-            $sender->sendMessage("§9Ranks> §cInvalid player");
+            $sender->sendMessage("§9Ranks> §cInvalid player given");
             return;
         }
 
         $rank = RankDatabase::getRankByName($args[1]);
         if($rank === null || in_array(strtolower($args[1]), ["vip", "mvp", "bedrock"])) {
-            $sender->sendMessage("§9Ranks> §cInvalid rank");
+            $sender->sendMessage("§9Ranks> §7Invalid rank given");
             return;
         }
 
         RankDatabase::savePlayerRank($player, $rank->getName(), true);
-        $player->sendMessage("§9Ranks> §aYour rank was updated by {$sender->getName()} to {$rank->getName()}!");
-        $sender->sendMessage("§9Ranks> §a{$player->getName()}'s rank successfully updated to {$rank->getName()}!");
+        $player->sendMessage("§9Ranks> §7Your rank was updated by §a{$sender->getName()} §7to §a{$rank->getName()}!");
+        $sender->sendMessage("§9Ranks> §a{$player->getName()}§7's rank successfully updated to §a{$rank->getName()}!");
     }
 }
