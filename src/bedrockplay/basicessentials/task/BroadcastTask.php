@@ -1,6 +1,6 @@
 <?php
 
-namespace bedrockplay\basicessentialstask;
+namespace bedrockplay\basicessentials\task;
 
 
 use bedrockplay\basicessentials\BasicEssentials;
