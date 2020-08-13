@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace bedrockplay\basicessentials;
 
-use bedrockplay\basicessentials\broadcaster\BroadcasterManager;
-use bedrockplay\basicessentials\broadcaster\task\BroadcastTask;
+
 use bedrockplay\basicessentials\commands\AddCoinsCommand;
 use bedrockplay\basicessentials\commands\BanCommand;
-use bedrockplay\basicessentials\commands\BroadcastCommand;
 use bedrockplay\basicessentials\commands\CoinsCommand;
 use bedrockplay\basicessentials\commands\SetRankCommand;
+use bedrockplay\basicessentialstask\BroadcastTask;
 use bedrockplay\openapi\ranks\RankDatabase;
 use bedrockplay\openapi\servers\ServerManager;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\plugin\PluginBase;
+use pocketmine\utils\TextFormat;
 use vixikhd\bpcore\api\language\T;
 
 /**
@@ -26,8 +26,18 @@ use vixikhd\bpcore\api\language\T;
 
 class BasicEssentials extends PluginBase implements Listener {
 
+
+
+    const SERVER_NAME = TextFormat::BOLD . TextFormat::YELLOW . "BP" . TextFormat::DARK_GRAY . "»";
+
+
     /** @var float[] $chatDelays */
     public $chatDelays = [];
+    /**
+     * @var BasicEssentials
+     */
+    private static $instance;
+
 
     public function onEnable() {
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
@@ -37,6 +47,11 @@ class BasicEssentials extends PluginBase implements Listener {
         $this->getServer()->getCommandMap()->register("BasicEssentials", new CoinsCommand());
         $this->getServer()->getCommandMap()->register("BasicEssentials", new SetRankCommand());
 
+    }
+
+    public function onLoad(): void {
+        $this->getServer()->getNetwork()->setName(self::SERVER_NAME);
+        self::$instance = $this;
     }
 
     public function onDisable() {
@@ -114,5 +129,12 @@ class BasicEssentials extends PluginBase implements Listener {
         $chatColor = $player->hasPermission("bedrockplay.vip") ? "§f" : "§7";
         $fontHeightParameter = $rank->getName() === "Guest" ? "՗" : " ";
         $event->setFormat("{$rank->getFormatForChat()}§r§7{$player->getName()}§8:{$chatColor}{$fontHeightParameter}{$event->getMessage()}");
+    }
+
+    /**
+     * @return BasicEssentials
+     */
+    public static function getInstance(): BasicEssentials {
+        return self::$instance;
     }
 }

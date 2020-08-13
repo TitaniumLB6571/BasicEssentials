@@ -1,6 +1,6 @@
 <?php
 
-namespace bedrockplay\basicessentials\broadcaster\task;
+namespace bedrockplay\basicessentialstask;
 
 
 use bedrockplay\basicessentials\BasicEssentials;
